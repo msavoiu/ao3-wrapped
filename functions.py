@@ -22,14 +22,6 @@ def getFromSoup(username, url_type, session): # url_type is either 'bookmarks' o
         if soup.find('div', class_='header module') is None:
             break
 
-        # func_call = getFunc(soup)
-        # func_call2 = getFunc2(soup)
-        # func_call3 = getFunc3(soup)
-
-        # scraped1 += func_call
-        # scraped2 += func_call2
-        # scraped3 += func_call3
-
         ships += getShips(soup)
         ratings += getRatings(soup)
         fandoms += getFandoms(soup)
