@@ -33,7 +33,7 @@ def bookmarksWrapped():
     login_check_soup = BeautifulSoup(login_check, 'lxml')
     if login_check_soup.find('div', class_='system errors error-404 region'):
         flash('Your username is invalid. Please try again!')
-        return redirect('/bookmarks', code=302) # works!
+        return redirect('/bookmarks', code=302)
 
     if request.form['timeframe'] == 'all time':
         fanfics = scrapeAllFanfics(username, 'bookmarks', s)
@@ -129,20 +129,16 @@ def historyWrapped():
         freeforms.extend(fanfic.freeforms)
         total_word_count += fanfic.wordcount
 
-    generateWordcloud(freeforms) # Located at static/wordcloud.png
-
-    ordered_fandom_freqs = sortedFrequencyDict(fandoms)
-    ordered_rating_freqs = sortedFrequencyDict(ratings)
-    ordered_category_freqs = sortedFrequencyDict(categories)
-    ordered_ship_freqs = sortedFrequencyDict(ships)
-    ordered_character_freqs = sortedFrequencyDict(characters)
-    freeforms_freq = Counter(freeforms)
+    rating_percents = frequenciesToPercents(ratings)
+    
+    generateWordcloud(freeforms)
 
     return render_template('wrapped.html',
                            total_word_count = total_word_count,
-                           total_word_count_commas = f'{total_word_count:,d}',
-                           fandoms = ordered_fandom_freqs,
-                           ships = ordered_ship_freqs)
+                           total_word_count_string = f'{total_word_count:,d}',
+                           fandoms = sortedFrequencyList(fandoms)[0:5],
+                           ships = sortedFrequencyList(ships)[0:5],
+                           ratings = rating_percents)
 
 if __name__ == '__main__':
     app.run(debug=True)
