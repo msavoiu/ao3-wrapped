@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>History Wrapped | AO3 Wrapped</title>
+  <link rel="stylesheet" href="../static/styles.css">
+</head>
+<body>
+  <div class="spacer"></div>
+
+  <div class="title-container">
+    <img src="../static/images/ao3-logo.png" alt="AO3 Logo" class="logo">
+    <h1>WRAPPED</h1>
+  </div>
+
+  <div class="main-body">
+    <h2>You've read a total of
+        <br>
+        {{ total_word_count_string }}
+        <br>
+        words of fanfiction.
+    </h2>
+
+    {% if total_word_count > 1084170 %}
+        <p>That's more than the entire Harry Potter series!</p>
+
+    {% elif total_word_count > 783137 %}
+        <p>That's more than the Bible!</p>
+
+    {% elif total_word_count > 576459 %}
+        <p>That's more than the entire Lord of the Rings series!</p>
+
+    {% endif %}
+    
+    <h2>Your top ships of all time are...</h2>
+    <div class="tag-list">
+      <ol>
+        {% for ship in ships %}
+        <li>{{ ship[0] }} ({{ ship[1] }} works)</li>
+        {% endfor %}
+      </ol>
+    </div>
+
+    <h2>Your top fandoms of all time are...</h2>
+    <ol>
+      {% for fandom in fandoms %}
+      <li>{{ fandom[0] }} ({{ fandom[1] }} works)</li>
+      {% endfor %}
+    </ol>
+
+    <h2>Your most common rating was
+        <br>
+        {{ ratings[0][0] }} ({{ ratings[0][1] }}%)
+    </h2>
+
+    <!-- figure out how to center this -->
+    <img src="../static/images/wordcloud.png" alt="Freeform tags word cloud" style="height:800px; width:800px;">
+  </div>
+</body>
+
+</html>

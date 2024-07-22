@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bookmarks Wrapped | AO3 Wrapped</title>
+  <link rel="stylesheet" href="../static/styles.css">
+</head>
+<body>
+  <div class="spacer"></div>
+
+  <div class="title-container">
+    <img src="../static/images/ao3-logo.png" alt="AO3 Logo" class="logo">
+    <h1>WRAPPED</h1>
+  </div>
+
+  <div class="login-form">
+    <form class="form" method="POST">
+      <input type="text" placeholder="Username" name="username" class="text-input" required pattern="[a-zA-Z0-9_]{3,40}" oninvalid="this.setCustomValidity('Please enter a valid AO3 username.')" oninput="this.setCustomValidity('')"/><br>
+      
+      <div class="break"></div>
+
+      <select name="timeframe">
+        <option value="this year">This year</option>
+        <option value="all time">All time</option>
+      </select>
+
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          {% for message in messages %}
+            <p>{{ message }}</p>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+
+      <input class="button" type="submit" name="submit-credentials" value="Get My Wrapped!">
+    </form>
+  </div>
+
+  <div class="footer">
+    <hr class="dotted">
+    <p>
+      <a href="/">Home</a> | <a href="/about">About</a> | <a href="/privacy-policy">Privacy Policy</a> | <a href="/">GitHub</a>
+      <br>
+      Made with ♥ by <a href="https://github.com/msavoiu">Madeline Savoiu</a>
+    </p>
+  </div>
+</body>
+</html>
