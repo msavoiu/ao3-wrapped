@@ -7,35 +7,42 @@
   <link rel="stylesheet" href="../static/styles.css">
 </head>
 <body>
-  <div class="spacer"></div>
+  <div class="body-container">
+    <div class="logo-title-container">
+      <img src="../static/images/logo.png" alt="AO3 Logo" class="logo">
+    </div>
 
-  <div class="title-container">
-    <img src="../static/images/ao3-logo.png" alt="AO3 Logo" class="logo">
-    <h1>WRAPPED</h1>
-  </div>
-
-  <div class="main-body">
     <h2>You've read a total of
         <br>
         {{ total_word_count_string }}
         <br>
         words of fanfiction.
-    </h2>
 
-    {% if total_word_count > 1084170 %}
-        <p>That's more than the entire Harry Potter series!</p>
+    <!-- https://brokebybooks.com/the-word-count-of-175-favorite-novels/ -->
+    </h2>
+    {% if total_word_count > 1842762 %}
+      <p>That's more than the entire A Song of Ice and Fire series!</p>
+
+    {% elif total_word_count > 1084170 %}
+      <p>That's more than the entire Harry Potter series!</p>
 
     {% elif total_word_count > 783137 %}
-        <p>That's more than the Bible!</p>
+      <p>That's more than the Bible!</p>
 
     {% elif total_word_count > 576459 %}
-        <p>That's more than the entire Lord of the Rings series!</p>
+      <p>That's more than the entire Lord of the Rings series!</p>
+    
+    {% elif total_word_count > 530982 %}
+      <p>That's more than Les Miserables!</p>
+
+    {% elif total_word_count > 345535 %}
+      <p>That's more than the entire Chronicles of Narnia series!</p>
 
     {% endif %}
     
     <h2>Your top ships of all time are...</h2>
     <div class="tag-list">
-      <ol>
+      <ol class="list">
         {% for ship in ships %}
         <li>{{ ship[0] }} ({{ ship[1] }} works)</li>
         {% endfor %}
@@ -43,7 +50,7 @@
     </div>
 
     <h2>Your top fandoms of all time are...</h2>
-    <ol>
+    <ol class="list">
       {% for fandom in fandoms %}
       <li>{{ fandom[0] }} ({{ fandom[1] }} works)</li>
       {% endfor %}
@@ -55,7 +62,7 @@
     </h2>
 
     <!-- figure out how to center this -->
-    <img src="../static/images/wordcloud.png" alt="Freeform tags word cloud" style="height:800px; width:800px;">
+    <img src="../static/images/wordcloud.png" alt="Freeform tags word cloud" style="max-width: 50%">
   </div>
 </body>
 

@@ -7,32 +7,59 @@
   <link rel="stylesheet" href="../static/styles.css">
 </head>
 <body>
-  <div class="spacer"></div>
-  <h1>About AO3 Wrapped</h1>
-  <div class="main-body">
-    <p>AO3 Wrapped was inspired by Spotify Wrapped.</p>
-
-    <h2>FAQ</h2>
-    <h3>Why does AO3 Wrapped need my password?</h3>
+  <div class="body-container">
+    <h1>About AO3 Wrapped</h1>
     <p>
-      AO3 user reading history pages are hidden unless you are logged in, so 
-      the app won't be able to gather data from them without login credentials.
-      If you are uncomfortable using your password, using your bookmarks is a 
-      password-free way to generate a Wrapped!
+      Inspired by Spotify Wrapped, AO3 Wrapped generates user statistics based 
+      on your Archive of Our Own profile data. Here’s what AO3 Wrapped can show you:
+      <br>
+      <i><br>• Total word count of fics read
+      <br>• Top ships and fandoms
+      <br>• Character that showed up most frequently
+      <br>• Most common relationship category
+      <br>• Age rating breakdown
+      <br>• Word cloud of your most frequent tags
+      <br>• The month you read the most <b>(only available for yearly Wrapped)</b></i>
+      <br>
+      <br>
+      You also have the option to download a CSV(?) file with more detailed data 
+      for further viewing.
     </p>
-    <h3>My stats don’t look right! What’s wrong?</h3>
+
+    <h1>FAQ</h1>
+
+    <h2>Why does AO3 Wrapped need my password?</h2>
     <p>
-      Unfortunately, Archive of Our Own does not have an official public API,
-       so AO3 Wrapped uses web scraping to gather reading information. This 
-       does mean that reading stats may not be 100% reflective of actual reading
-       done (for example, clicking on a work adds it to your history regardless
-       of how long you stayed on the page).
+      AO3 wrapped cannot access the reading history pages necessary to generate 
+      your Wrapped without being logged in to the website. If you would prefer 
+      not to log in, you can generate a smaller Wrapped with your public 
+      bookmarks instead.
+    </p>
+
+    <h2>My stats don’t look right! What’s wrong?</h2>
+    <p>
+      AO3 Wrapped uses web scraping to gather reading information since Archive of 
+      Our Own does not currently have a public API.
+      <br>
+      <br>
+      This means that reading stats may not be 100% reflective of actual reading 
+      done on AO3 (for example, clicking on a work adds it to your history 
+      regardless of how long you stayed on the page). Your total word count may 
+      also be off if you read works written in languages that don’t use spaces, 
+      like Chinese and Japanese, because of the way AO3 calculates word counts.
+    </p>
+
+    <h2>Can you add this feature?</h2>
+    <p>
+      Feel free to message me at [] with any suggestions! I’m always looking for 
+      ways to improve AO3 Wrapped. However, I am a full time student who develops 
+      and manages this web app on my own, so please be patient with me :&#41;
     </p>
   </div>
 
   <div class="spacer"></div>
 
-  <div class="footer">
+  <div class="footer-container">
     <hr class="dotted">
     <p>
       <a href="/">Home</a> | <a href="/about">About</a> | <a href="/privacy-policy">Privacy Policy</a> | <a href="/">GitHub</a>

@@ -7,43 +7,47 @@
   <link rel="stylesheet" href="../static/styles.css">
 </head>
 <body>
-  <div class="spacer"></div>
+  <div class="body-container">
+    <div class="logo-title-container">
+      <img src="../static/images/logo.png" alt="AO3 Logo" class="logo">
+    </div>
 
-  <div class="title-container">
-    <img src="../static/images/ao3-logo.png" alt="AO3 Logo" class="logo">
-    <h1>WRAPPED</h1>
+    <div class="login-form">
+      <form class="form" method="POST">
+        <div class="input-fields">
+          <input type="text" placeholder="Username" name="username" class="text-input" required pattern="[a-zA-Z0-9_]{3,40}" oninvalid="this.setCustomValidity('Please enter a valid AO3 username.')" oninput="this.setCustomValidity('')"/><br>
+
+          <div class="break"></div>
+
+          <input type="radio" id="this-year" name="timeframe" value="This year">
+          <label for="this-year">This year</label>
+          <!-- <div class="break"></div> -->
+          <input type="radio" id="all-time" name="timeframe" value="All time">
+          <label for="all-time">All time</label>
+        </div>
+
+        <!-- {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            {% for message in messages %}
+              <p>{{ message }}</p>
+            {% endfor %}
+          {% endif %}
+        {% endwith %} -->
+
+        <input class="button" type="submit" name="submit-credentials" value="Get My Wrapped!">
+      </form>
+    </div>
   </div>
 
-  <div class="login-form">
-    <form class="form" method="POST">
-      <input type="text" placeholder="Username" name="username" class="text-input" required pattern="[a-zA-Z0-9_]{3,40}" oninvalid="this.setCustomValidity('Please enter a valid AO3 username.')" oninput="this.setCustomValidity('')"/><br>
-      
-      <div class="break"></div>
-
-      <select name="timeframe">
-        <option value="this year">This year</option>
-        <option value="all time">All time</option>
-      </select>
-
-      {% with messages = get_flashed_messages() %}
-        {% if messages %}
-          {% for message in messages %}
-            <p>{{ message }}</p>
-          {% endfor %}
-        {% endif %}
-      {% endwith %}
-
-      <input class="button" type="submit" name="submit-credentials" value="Get My Wrapped!">
-    </form>
-  </div>
-
-  <div class="footer">
+  <div class="footer-container">
     <hr class="dotted">
     <p>
-      <a href="/">Home</a> | <a href="/about">About</a> | <a href="/privacy-policy">Privacy Policy</a> | <a href="/">GitHub</a>
+      <a href="/">Home</a> | <a href="/about">About</a> | 
+      <a href="/privacy-policy">Privacy Policy</a> | <a href="/">GitHub</a>
       <br>
       Made with ♥ by <a href="https://github.com/msavoiu">Madeline Savoiu</a>
     </p>
   </div>
+
 </body>
 </html>
