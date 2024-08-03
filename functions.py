@@ -150,7 +150,7 @@ def scrapeAllFanfics(username, url_type, session):
                     'Mystery Work' in blurb.text):
                     deletion_indices.append(index)
             if url_type == 'readings':
-                if ('This has been deleted, sorry!' in blurb.text or
+                if ('Deleted work,' in blurb.text or
                     'Mystery' in blurb.text):
                     deletion_indices.append(index)
             index += 1
@@ -241,14 +241,14 @@ def frequenciesToPercents(mylist):
     return percent_frequencies
 
 def generateWordcloud(tags):
-    wordcloud = WordCloud(width=1920, height=1920,
+    wordcloud = WordCloud(width=1920, height=1080,
                           background_color='white',
-                          max_words=50,
+                          max_words=20,
                           color_func=lambda *args, **kwargs: (156,20,24),
                           font_path='static/fonts/LucidaGrande.ttf').generate_from_frequencies(Counter(tags))
 
     # Display the word cloud
-    plt.figure(figsize=(10, 10))
+    plt.figure(figsize=(16, 9))
     plt.imshow(wordcloud, interpolation='bilinear')
     plt.axis('off')  # Remove axes
 

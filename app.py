@@ -47,8 +47,9 @@ def bookmarksWrapped():
     ships = []
     characters = []
     freeforms = []
-    access_dates = []
+    access_months = []
     total_word_count = 0
+
 
     for fanfic in fanfics:
         fandoms.extend(fanfic.fandoms)
@@ -58,32 +59,31 @@ def bookmarksWrapped():
         characters.extend(fanfic.characters)
         freeforms.extend(fanfic.freeforms)
         total_word_count += fanfic.wordcount
+        access_months.append(fanfic.access_date[1])
 
-    # rating_percents = frequenciesToPercents(ratings)
-    
-    # generateWordcloud(freeforms)
+    generateWordcloud(freeforms)
 
-    # # Rating frequencies to JSON for creating Chart.js pie chart
-    # rating_labels = []
-    # rating_freqs = []
-    # for rating, freq in Counter(ratings).items():
-    #     rating_labels.append(rating)
-    #     rating_freqs.append(freq)
-    # print('rating_labels', rating_labels)
-    # print('rating_freqs', rating_freqs)
-    # rating_freqs_json = json.dumps(rating_freqs)
-    # with open('static/ratingsdata.json', 'w') as file:
-    #     json.dump(rating_freqs_json, file)
-    # print("'JSON data written to ratingsdata.json'")
+    labels = []
+    values = []
+
+    category_freqs = sortedFrequencyList(categories)
+    for category, freq in category_freqs:
+        labels.append(category)
+        values.append(freq)
+
+    print(labels)
+    print(values)
 
     return render_template('wrapped.html',
+                           timeframe = request.form['timeframe'],
                            total_word_count = total_word_count,
                            total_word_count_string = f'{total_word_count:,d}',
-                        #    fandoms = sortedFrequencyList(fandoms)[0:5],
+                           fandoms = sortedFrequencyList(fandoms)[0:5],
                            ships = sortedFrequencyList(ships)[0:5],
-                        #    ratings = rating_percents
-                            rating_labels = Counter(ratings).keys(),
-                            rating_freqs = Counter(ratings).values())
+                           month = sortedFrequencyList(access_months)[0],
+                           ratings = frequenciesToPercents(ratings),
+                           labels = labels,
+                           values = values)
 
 @app.route('/history')
 def history():
@@ -122,9 +122,9 @@ def historyWrapped():
         flash('Your username and/or password is incorrect. Please try again!')
         return redirect('/history', code=302)
 
-    if request.form['timeframe'] == 'all time':
+    if request.form['timeframe'] == 'All time':
         fanfics = scrapeAllFanfics(username, 'readings', s)
-    if request.form['timeframe'] == 'this year':
+    if request.form['timeframe'] == 'This year':
         fanfics = scrapeFanficsByYear(username, 'readings', s)
 
     fandoms = []
@@ -133,8 +133,9 @@ def historyWrapped():
     ships = []
     characters = []
     freeforms = []
-    access_dates = []
+    access_months = []
     total_word_count = 0
+
 
     for fanfic in fanfics:
         fandoms.extend(fanfic.fandoms)
@@ -144,17 +145,31 @@ def historyWrapped():
         characters.extend(fanfic.characters)
         freeforms.extend(fanfic.freeforms)
         total_word_count += fanfic.wordcount
+        access_months.append(fanfic.access_date[1])
 
-    rating_percents = frequenciesToPercents(ratings)
-    
     generateWordcloud(freeforms)
 
+    labels = []
+    values = []
+
+    category_freqs = sortedFrequencyList(categories)
+    for category, freq in category_freqs:
+        labels.append(category)
+        values.append(freq)
+
+    print(labels)
+    print(values)
+
     return render_template('wrapped.html',
+                           timeframe = request.form['timeframe'],
                            total_word_count = total_word_count,
                            total_word_count_string = f'{total_word_count:,d}',
                            fandoms = sortedFrequencyList(fandoms)[0:5],
                            ships = sortedFrequencyList(ships)[0:5],
-                           ratings = rating_percents)
+                           month = sortedFrequencyList(access_months)[0],
+                           ratings = frequenciesToPercents(ratings),
+                           labels = labels,
+                           values = values)
 
 if __name__ == '__main__':
     app.run(debug=True)
