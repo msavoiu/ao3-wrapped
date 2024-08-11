@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>History Wrapped | AO3 Wrapped</title>
   <link rel="stylesheet" href="../static/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
 </head>
 <body>
   <div class="body-container">
@@ -56,13 +57,66 @@
       {% endfor %}
     </ol>
 
-    <h2>Your most common rating was
+    <!-- <h2>Your most common rating was
         <br>
         {{ ratings[0][0] }} ({{ ratings[0][1] }}%)
-    </h2>
+    </h2> -->
 
-    <!-- figure out how to center this -->
     <img src="../static/images/wordcloud.png" alt="Freeform tags word cloud" style="max-width: 100%">
+
+    <div class="rating-wrapped">
+      <h2>Most of the fics you read were rated</h2>
+      {% if ratings[0][0] == 'Explicit' %}
+        <img src="../static/images/rating-explicit.png" alt="Explicit">
+        <h2> for Explicit! ({{ ratings[0][1] }}%)</h2>
+      {% elif ratings[0][0] == 'Mature' %}
+        <img src="../static/images/rating-mature.png" alt="Mature">
+        <h2> for Mature! ({{ ratings[0][1] }}%)</h2>
+      {% elif ratings[0][0] == 'Teen And Up Audiencecs' %}
+        <img src="../static/images/rating-teen.png" alt="Teen">
+        <h2> for Teen and Up Audiences! ({{ ratings[0][1] }}%)</h2>
+      {% elif ratings[0][0] == 'Teen And Up Audiencecs' %}
+        <img src="../static/images/rating-general-audience.png" alt="General">
+        <h2> for General Audiences! ({{ ratings[0][1] }}%)</h2>
+      {% endif %}
+      <!-- pi chart here -->
+
+      {% if timeframe == 'This year' %}
+        <h2>You read the most during {{month[0]}}.</h2>
+      {% endif %}
+    </div>
+
+    <canvas id="pie-chart" width="900" height="900"></canvas>
+
+    <!-- pie chart drawing script -->
+    <script>
+      var context = document.getElementById("pie-chart").getContext("2d");
+      const CHART_COLORS = {
+        "F/F": "rgba(219,14,47,255)",
+        "M/M": "rgba(0,84,211,255)",
+        "F/M": "rgba(196,32,101,255)",
+        "Gen": "rgba(141,196,1,255)",
+        "Multi": "rgba(121,85,51,255)", // picked from the middle of the 4x4
+        "Other": "rgba(0,0,0,255)",
+        "No category": "rgba(220,220,218,255)"
+      }
+      // ^^ DOES NOT WORK! figure out how to map colors to labels
+
+      var pieChart = new Chart(context, {
+        type: "pie",
+        data: 
+          {
+            labels: {{ labels | safe }},
+            datasets: [
+              {
+                label: "Number of works",
+                data: {{ values | safe }}
+                // backgroundColor: []
+              }
+            ]
+          },
+      });
+    </script>
   </div>
 </body>
 
