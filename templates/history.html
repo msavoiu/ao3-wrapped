@@ -4,39 +4,63 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>History Wrapped | AO3 Wrapped</title>
+  <link rel="icon" type="image/x-icon" href="../static/favicon.ico">
   <link rel="stylesheet" href="../static/styles.css">
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('submit-login-form');
+        const loadingDiv = document.getElementById('loading');
+
+        form.addEventListener('submit', function(event) {
+            if (form.checkValidity()) {
+                loadingDiv.style.display = 'block';
+            } //else {
+            //     event.preventDefault();
+            // }
+        });
+    });
+  </script>
 </head>
 <body>
-  <div class="body-container">
+  <div class="body-container" id="content">
     <div class="logo-title-container">
-      <img src="../static/images/logo.png" alt="AO3 Logo" class="logo">
+      <a href="/">
+        <img src="../static/images/logo.png" alt="AO3 Logo" class="logo">
+      </a>
     </div>
 
     <div class="login-form">
-      <form class="form" method="POST">
+      <form class="form" method="POST" id="submit-login-form">
         <div class="input-fields">
-          <input type="text" placeholder="Username" name="username" class="text-input" required pattern="[a-zA-Z0-9_]{3,40}" oninvalid="this.setCustomValidity('Please enter a valid AO3 username.')" oninput="this.setCustomValidity('')"/><br>
+          <input type="text" placeholder="Username" name="username" 
+          class="text-input" required pattern="[a-zA-Z0-9_]{3,40}" 
+          oninvalid="this.setCustomValidity('Please enter a valid AO3 username.')" 
+          oninput="this.setCustomValidity('')"/><br>
           <input type="password" placeholder="Password" name="password" class="text-input" required>
 
           <div class="break"></div>
 
           <input type="radio" id="this-year" name="timeframe" value="This year">
           <label for="this-year">This year</label>
-          <!-- <div class="break"></div> -->
           <input type="radio" id="all-time" name="timeframe" value="All time">
           <label for="all-time">All time</label>
         </div>
 
-        <!-- {% with messages = get_flashed_messages() %}
+        {% with messages = get_flashed_messages() %}
           {% if messages %}
             {% for message in messages %}
               <p class="note">{{ message }}</p>
             {% endfor %}
           {% endif %}
-        {% endwith %} -->
+        {% endwith %}
         
         <input class="button" type="submit" name="submit-credentials" value="Get My Wrapped!">
       </form>
+    </div>
+
+    <div id="loading">
+      <img src="../static/images/loading.gif" alt="Loading spinner">
+      <p>Generating Wrapped...</p>
     </div>
   </div>
 
@@ -44,26 +68,12 @@
     <hr class="dotted">
     <p>
       <a href="/">Home</a> | <a href="/about">About</a> | 
-      <a href="/privacy-policy">Privacy Policy</a> | <a href="/">GitHub</a>
+      <a href="/privacy-policy">Privacy Policy</a> | 
+      <a href="https://github.com/msavoiu/ao3-wrapped" target="_blank">GitHub</a>
       <br>
-      Made with ♥ by <a href="https://github.com/msavoiu">Madeline Savoiu</a>
+      Made with ♥ by <a href="https://github.com/msavoiu" target="_blank">Madeline Savoiu</a>
     </p>
   </div>
-
-<!-- https://www.sitepoint.com/community/t/display-a-text-box-when-dropdown-list-says-other/1231/4 -->
-<!-- https://stackoverflow.com/questions/67541115/how-to-get-the-inputs-value -->
-  <!-- <script>
-    function redirect() {
-      let form = document.querySelector(".form");
-      form.addEventListener("submit", function (e) {
-        e.preventDefault();
-        let formdata = new Formdata(this);
-        let input = formdata.get("timeframe");
-        alert(input);
-                console.log(input);
-      });
-    }
-  </script> -->
 
 </body>
 </html>

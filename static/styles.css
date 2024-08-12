@@ -1,5 +1,5 @@
 * {
-    font-family: 'Lucida Sans Unicode', 'GNU Unifont',
+    font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'GNU Unifont',
                  Verdana, Helvetica, sans-serif;
 }
 
@@ -25,8 +25,15 @@ body {
     background-color: #CC8080;
 }
 
+div#loading {
+    display: none;
+    img {
+        width: 50px;
+    }
+}
+
 div.body-container {
-    width: 60%;
+    width: 90%;
     text-align: center;
     margin-left: auto;
     margin-right: auto;
@@ -37,6 +44,7 @@ div.body-container {
 div.footer-container {
     font-size: 14px;
     text-align: center;
+    margin-bottom: 150px;
 }
 
 .footer-container:a {
@@ -47,13 +55,17 @@ div.input-fields {
     margin-bottom: 20px;
 }
 
-div.notice-container {
+/* div.notice-container {
     width: 100%;
     text-align: center;
     font-size: 14px;
     margin-left: auto;
     margin-right: auto;
     margin-top: 30px;
+} */
+
+div.rating-wrapped > h2, img {
+    display: inline;
 }
 
 hr.dotted {
@@ -67,8 +79,18 @@ img.logo {
     margin-bottom: 20px;
 }
 
+.list {
+    list-style-position: inside;
+}
+
 .login-form {
     font-size: 16px;
+    margin-bottom: 30px;
+}
+
+#pie-chart {
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .text-input {
@@ -76,6 +98,10 @@ img.logo {
     padding: 5px 5px;
     font-size: 16px;
     border-radius: 10px;
+}
+
+.wordcloud {
+    margin-bottom: 20px;
 }
 
 @media (min-width: 1280px) {
@@ -93,8 +119,12 @@ img.logo {
         display: inline-block;
     }
 
+    div.body-container {
+        width: 25%;
+    }
+
     div.notice-container {
-        width: 500px;
+        width: 100%;
         text-align: center;
         font-size: 13px;
         margin-left: auto;
