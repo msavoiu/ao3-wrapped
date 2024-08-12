@@ -80,6 +80,7 @@ img.logo {
 }
 
 .list {
+    padding: 0;
     list-style-position: inside;
 }
 
