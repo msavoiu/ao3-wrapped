@@ -74,6 +74,19 @@ def bookmarksWrapped():
         labels.append(category)
         values.append(freq)
 
+    month_abbrevs = {'Jan': 'January',
+                     'Feb': 'February',
+                     'Mar': 'March',
+                     'Apr': 'April',
+                     'May': 'May',
+                     'Jun': 'June',
+                     'Jul': 'July',
+                     'Aug': 'August',
+                     'Sep': 'September',
+                     'Oct': 'October',
+                     'Nov': 'November',
+                     'Dec': 'December'}
+
     return render_template('wrapped.html',
                            timeframe = request.form['timeframe'],
                            total_fanfic_amount = len(fanfics),
@@ -81,7 +94,7 @@ def bookmarksWrapped():
                            total_word_count_string = f'{total_word_count:,d}',
                            fandoms = sortedFrequencyList(fandoms)[0:5],
                            ships = sortedFrequencyList(ships)[0:5],
-                           month = sortedFrequencyList(access_months)[0][0],
+                           month = month_abbrevs[sortedFrequencyList(access_months)[0][0]],
                            ratings = frequenciesToPercents(ratings),
                            categories = labels,
                            frequencies = values)
@@ -158,6 +171,19 @@ def historyWrapped():
         labels.append(category)
         values.append(freq)
 
+    month_abbrevs = {'Jan': 'January',
+                     'Feb': 'February',
+                     'Mar': 'March',
+                     'Apr': 'April',
+                     'May': 'May',
+                     'Jun': 'June',
+                     'Jul': 'July',
+                     'Aug': 'August',
+                     'Sep': 'September',
+                     'Oct': 'October',
+                     'Nov': 'November',
+                     'Dec': 'December'}
+
     return render_template('wrapped.html',
                            timeframe = request.form['timeframe'],
                            total_fanfic_amount = len(fanfics),
@@ -165,7 +191,7 @@ def historyWrapped():
                            total_word_count_string = f'{total_word_count:,d}',
                            fandoms = sortedFrequencyList(fandoms)[0:5],
                            ships = sortedFrequencyList(ships)[0:5],
-                           month = sortedFrequencyList(access_months)[0][0],
+                           month = month_abbrevs[sortedFrequencyList(access_months)[0][0]],
                            ratings = frequenciesToPercents(ratings),
                            categories = labels,
                            frequencies = values)
