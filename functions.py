@@ -243,7 +243,7 @@ def frequenciesToPercents(mylist):
 def generateWordcloud(tags):
     wordcloud = WordCloud(width=1920, height=1080,
                           background_color='white',
-                          max_words=20,
+                          max_words=30,
                           color_func=lambda *args, **kwargs: (156,20,24),
                           font_path='static/fonts/LucidaGrande.ttf').generate_from_frequencies(Counter(tags))
 
@@ -252,5 +252,6 @@ def generateWordcloud(tags):
     plt.imshow(wordcloud, interpolation='bilinear')
     plt.axis('off')  # Remove axes
 
-    plt.savefig('static/images/wordcloud.png')
+    plt.savefig('static/images/wordcloud.png',
+                bbox_inches='tight')
     print("Word cloud saved to 'static/images/wordcloud.png'")

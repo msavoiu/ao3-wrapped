@@ -5,23 +5,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>History Wrapped | AO3 Wrapped</title>
   <link rel="stylesheet" href="../static/styles.css">
+  <link rel="icon" type="image/x-icon" href="../static/favicon.ico">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
 </head>
 <body>
   <div class="body-container">
-    <div class="logo-title-container">
-      <img src="../static/images/logo.png" alt="AO3 Logo" class="logo">
-    </div>
+      <div class="logo-title-container">
+        <a href="/">
+          <img src="../static/images/logo.png" alt="AO3 Logo" class="logo">
+        </a>
+      </div>
 
-    <h2>You've read a total of
+    {% if timeframe == 'This year' %}
+      <h2>This year, you read {{total_fanfic_amount}} different fanfics.</h2>
+      <h2>That's a total of
         <br>
         {{ total_word_count_string }}
         <br>
-        words of fanfiction.
+        words of fanfiction!
+      </h2>
+    {% elif timeframe == 'All time' %}
+      <h2>You've read {{total_fanfic_amount}} different fanfics.</h2>
+      <h2>That's a total of
+        <br>
+        {{ total_word_count_string }}
+        <br>
+        words of fanfiction!
+      </h2>
+      {% endif %}
 
     <!-- https://brokebybooks.com/the-word-count-of-175-favorite-novels/ -->
-    </h2>
-    {% if total_word_count > 1842762 %}
+    <!-- {% if total_word_count > 1842762 %}
       <p>That's more than the entire A Song of Ice and Fire series!</p>
 
     {% elif total_word_count > 1084170 %}
@@ -39,9 +53,14 @@
     {% elif total_word_count > 345535 %}
       <p>That's more than the entire Chronicles of Narnia series!</p>
 
+    {% endif %} -->
+    
+    {% if timeframe == 'All time' %}
+    <h2>Your top ships of all time are...</h2> 
+    {% elif timeframe == 'This year' %}
+    <h2>Your top ships this year are...</h2>
     {% endif %}
     
-    <h2>Your top ships of all time are...</h2>
     <div class="tag-list">
       <ol class="list">
         {% for ship in ships %}
@@ -50,19 +69,21 @@
       </ol>
     </div>
 
-    <h2>Your top fandoms of all time are...</h2>
+    {% if timeframe == 'All time' %}
+    <h2>Your top fandoms of all time are:</h2> 
+    {% elif timeframe == 'This year' %}
+    <h2>Your top fandoms this year are:</h2>
+    {% endif %}
+
     <ol class="list">
       {% for fandom in fandoms %}
       <li>{{ fandom[0] }} ({{ fandom[1] }} works)</li>
       {% endfor %}
     </ol>
 
-    <!-- <h2>Your most common rating was
-        <br>
-        {{ ratings[0][0] }} ({{ ratings[0][1] }}%)
-    </h2> -->
-
-    <img src="../static/images/wordcloud.png" alt="Freeform tags word cloud" style="max-width: 100%">
+    <h2>And here's some of your favorite tags:</h2>
+    <img src="../static/images/wordcloud.png" class="wordcloud" 
+    alt="Freeform tags word cloud" style="max-width: 100%">
 
     <div class="rating-wrapped">
       <h2>Most of the fics you read were rated</h2>
@@ -79,43 +100,68 @@
         <img src="../static/images/rating-general-audience.png" alt="General">
         <h2> for General Audiences! ({{ ratings[0][1] }}%)</h2>
       {% endif %}
-      <!-- pi chart here -->
-
-      {% if timeframe == 'This year' %}
-        <h2>You read the most during {{month[0]}}.</h2>
-      {% endif %}
     </div>
-
+      
     <canvas id="pie-chart" width="900" height="900"></canvas>
 
-    <!-- pie chart drawing script -->
-    <script>
-      var context = document.getElementById("pie-chart").getContext("2d");
-      const CHART_COLORS = {
-        "F/F": "rgba(219,14,47,255)",
-        "M/M": "rgba(0,84,211,255)",
-        "F/M": "rgba(196,32,101,255)",
-        "Gen": "rgba(141,196,1,255)",
-        "Multi": "rgba(121,85,51,255)", // picked from the middle of the 4x4
-        "Other": "rgba(0,0,0,255)",
-        "No category": "rgba(220,220,218,255)"
-      }
-      // ^^ DOES NOT WORK! figure out how to map colors to labels
+    <h2>Most of them belonged to the {{categories[0]}} category.</h2>
 
-      var pieChart = new Chart(context, {
-        type: "pie",
-        data: 
-          {
-            labels: {{ labels | safe }},
-            datasets: [
-              {
-                label: "Number of works",
-                data: {{ values | safe }}
-                // backgroundColor: []
-              }
-            ]
-          },
-      });
+    {% if timeframe == 'This year' %}
+      <h2>You read the most during {{month}}!</h2>
+    {% endif %}
+  </div>
+
+  <div class="footer-container">
+    <hr class="dotted">
+    <p>
+      <a href="/">Home</a> | <a href="/about">About</a> | 
+      <a href="https://github.com/msavoiu/ao3-wrapped" target="_blank">GitHub</a>
+      <br>
+      Made with ♥ by <a href="https://www.linkedin.com/in/savoiu/" target="_blank">Madeline Savoiu</a>
+    </p>
+  </div>
+
+    <script>
+    const labels = {{ categories | safe }};
+    const values = {{ frequencies | safe }};
+    const labelColorMap = {
+      "F/F": "#db0e2f",
+      "M/M": "#0054d3",
+      "F/M": "#c42065",
+      "Gen": "#8dc401",
+      "Multi": "#795533", // picked from the middle of the 4x4
+      "Other": "#000000",
+      "No category": "#dcdcda"
+    };
+    
+    function getBackgroundColors(labels) {
+      return labels.map(label => labelColorMap[label] || '#000000');
+    }
+
+    const backgroundColors = getBackgroundColors(labels);
+  
+    const ctx = document.getElementById("pie-chart").getContext("2d");
+    var pieChart = new Chart(ctx, {
+      type: "pie",
+      data: 
+        {
+          labels: labels,
+          datasets: [
+            {
+              label: "Number of works",
+              data: values,
+              backgroundColor: backgroundColors
+            }
+          ]
+        },
+        options: {
+          legend: {
+            labels: {
+              fontColor: "#990000"
+            }
+          }
+        }
+    });
     </script>
   </div>
 </body>

@@ -33,7 +33,10 @@ def bookmarksWrapped():
     login_check = s.get(f'https://archiveofourown.org/users/{username}/bookmarks').text
     login_check_soup = BeautifulSoup(login_check, 'lxml')
     if login_check_soup.find('div', class_='system errors error-404 region'):
-        flash('Your username is invalid. Please try again!')
+        flash("Your username is invalid. Please try again!")
+        return redirect('/bookmarks', code=302)
+    if '0 Bookmarks by' in login_check_soup.find('div', class_='bookmarks-index dashboard filtered region').text:
+        flash("Sorry, it doesn't look like you have any public bookmarks!")
         return redirect('/bookmarks', code=302)
 
     if request.form['timeframe'] == 'All time':
@@ -71,19 +74,17 @@ def bookmarksWrapped():
         labels.append(category)
         values.append(freq)
 
-    print(labels)
-    print(values)
-
     return render_template('wrapped.html',
                            timeframe = request.form['timeframe'],
+                           total_fanfic_amount = len(fanfics),
                            total_word_count = total_word_count,
                            total_word_count_string = f'{total_word_count:,d}',
                            fandoms = sortedFrequencyList(fandoms)[0:5],
                            ships = sortedFrequencyList(ships)[0:5],
-                           month = sortedFrequencyList(access_months)[0],
+                           month = sortedFrequencyList(access_months)[0][0],
                            ratings = frequenciesToPercents(ratings),
-                           labels = labels,
-                           values = values)
+                           categories = labels,
+                           frequencies = values)
 
 @app.route('/history')
 def history():
@@ -157,19 +158,17 @@ def historyWrapped():
         labels.append(category)
         values.append(freq)
 
-    print(labels)
-    print(values)
-
     return render_template('wrapped.html',
                            timeframe = request.form['timeframe'],
+                           total_fanfic_amount = len(fanfics),
                            total_word_count = total_word_count,
                            total_word_count_string = f'{total_word_count:,d}',
                            fandoms = sortedFrequencyList(fandoms)[0:5],
                            ships = sortedFrequencyList(ships)[0:5],
-                           month = sortedFrequencyList(access_months)[0],
+                           month = sortedFrequencyList(access_months)[0][0],
                            ratings = frequenciesToPercents(ratings),
-                           labels = labels,
-                           values = values)
+                           categories = labels,
+                           frequencies = values)
 
 if __name__ == '__main__':
     app.run(debug=True)
