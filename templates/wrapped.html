@@ -20,7 +20,7 @@
       <h2>This year, you read {{total_fanfic_amount}} different fanfics.</h2>
       <h2>That's a total of
         <br>
-        {{ total_word_count_string }}
+        <b>{{ total_word_count_string }}</b>
         <br>
         words of fanfiction!
       </h2>
@@ -28,7 +28,7 @@
       <h2>You've read {{total_fanfic_amount}} different fanfics.</h2>
       <h2>That's a total of
         <br>
-        {{ total_word_count_string }}
+        <b>{{ total_word_count_string }}</b>
         <br>
         words of fanfiction!
       </h2>
@@ -58,7 +58,7 @@
     {% if timeframe == 'All time' %}
     <h2>Your top ships of all time are...</h2> 
     {% elif timeframe == 'This year' %}
-    <h2>Your top ships this year are...</h2>
+    <h2>Your top ships this year were...</h2>
     {% endif %}
     
     <div class="tag-list">
@@ -70,9 +70,9 @@
     </div>
 
     {% if timeframe == 'All time' %}
-    <h2>Your top fandoms of all time are:</h2> 
+      <h2>And your top fandoms of all time are...</h2> 
     {% elif timeframe == 'This year' %}
-    <h2>Your top fandoms this year are:</h2>
+      <h2>And your top fandoms this year were...</h2>
     {% endif %}
 
     <ol class="list">
@@ -81,33 +81,51 @@
       {% endfor %}
     </ol>
 
-    <h2>And here's some of your favorite tags:</h2>
+
+    <h2>But that's not all! Here's some of your favorite tags:</h2>
     <img src="../static/images/wordcloud.png" class="wordcloud" 
     alt="Freeform tags word cloud" style="max-width: 100%">
 
-    <div class="rating-wrapped">
+    <div class="inline-image-icons">
       <h2>Most of the fics you read were rated</h2>
-      {% if ratings[0][0] == 'Explicit' %}
+      {% if ratings[0] == 'Explicit' %}
         <img src="../static/images/rating-explicit.png" alt="Explicit">
-        <h2> for Explicit! ({{ ratings[0][1] }}%)</h2>
-      {% elif ratings[0][0] == 'Mature' %}
+        <h2> for Explicit,</h2>
+      {% elif ratings[0] == 'Mature' %}
         <img src="../static/images/rating-mature.png" alt="Mature">
-        <h2> for Mature! ({{ ratings[0][1] }}%)</h2>
-      {% elif ratings[0][0] == 'Teen And Up Audiencecs' %}
+        <h2> for Mature,</h2>
+      {% elif ratings[0] == 'Teen And Up Audiences' %}
         <img src="../static/images/rating-teen.png" alt="Teen">
-        <h2> for Teen and Up Audiences! ({{ ratings[0][1] }}%)</h2>
-      {% elif ratings[0][0] == 'Teen And Up Audiencecs' %}
+        <h2> for Teen and Up Audiences,</h2>
+      {% elif ratings[0] == 'Teen And Up Audiences' %}
         <img src="../static/images/rating-general-audience.png" alt="General">
-        <h2> for General Audiences! ({{ ratings[0][1] }}%)</h2>
+        <h2> for General Audiences,</h2>
+      {% endif %}
+
+      <h2> and belonged to the</h2>
+      {% if categories[0] == 'M/M' %}
+        <img src="../static/images/category-slash.png" alt="Slash">
+        <h2> M/M category.</h2>
+      {% elif categories[0] == 'F/F' %}
+        <img src="../static/images/category-femslash.png" alt="Femslash">
+        <h2> F/F category.</h2>
+      {% elif categories[0] == 'F/M' %}
+        <img src="../static/images/category-het.png" alt="Het">
+        <h2> F/M category.</h2>
+      {% elif categories[0] == 'Gen' %}
+        <img src="../static/images/category-gen.png" alt="Gen">
+        <h2> Gen category.</h2>
+      {% elif categories[0] == 'Other' %}
+        <img src="../static/images/category-other.png" alt="Other">
+        <h2> Other category.</h2>
       {% endif %}
     </div>
-      
-    <canvas id="pie-chart" width="900" height="900"></canvas>
 
-    <h2>Most of them belonged to the {{categories[0]}} category.</h2>
+    <canvas id="category-pie-chart" width="900" height="900"></canvas>
+    <canvas id="rating-pie-chart" width="900" height="900"></canvas>
 
     {% if timeframe == 'This year' %}
-      <h2>You read the most during {{month}}!</h2>
+      <h2>And last but not least, you read the most during {{month}}! What a busy month!</h2>
     {% endif %}
   </div>
 
@@ -121,9 +139,10 @@
     </p>
   </div>
 
-    <script>
+  <!-- CATEGORY PIE CHART -->
+  <script>
     const labels = {{ categories | safe }};
-    const values = {{ frequencies | safe }};
+    const values = {{ category_frequencies | safe }};
     const labelColorMap = {
       "F/F": "#db0e2f",
       "M/M": "#0054d3",
@@ -140,7 +159,7 @@
 
     const backgroundColors = getBackgroundColors(labels);
   
-    const ctx = document.getElementById("pie-chart").getContext("2d");
+    const ctx = document.getElementById("category-pie-chart").getContext("2d");
     var pieChart = new Chart(ctx, {
       type: "pie",
       data: 
@@ -162,8 +181,48 @@
           }
         }
     });
-    </script>
-  </div>
-</body>
+  </script>
 
+  <!-- RATING PIE CHART -->
+  <script>
+    const labels = {{ ratings | safe }};
+    const values = {{ rating_frequencies | safe }};
+    const labelColorMap = {
+      "Explicit": "#990000",
+      "Mature": "#e77504",
+      "Teen and Up Audiences": "#e8d506",
+      "General Audiences": "#8ac001",
+      "Not Rated": "#ebebe9"
+    };
+    
+    function getBackgroundColors(labels) {
+      return labels.map(label => labelColorMap[label] || '#000000');
+    }
+
+    const backgroundColors = getBackgroundColors(labels);
+  
+    const ctx = document.getElementById("rating-pie-chart").getContext("2d");
+    var pieChart = new Chart(ctx, {
+      type: "pie",
+      data: 
+        {
+          labels: labels,
+          datasets: [
+            {
+              label: "Number of works",
+              data: values,
+              backgroundColor: backgroundColors
+            }
+          ]
+        },
+        options: {
+          legend: {
+            labels: {
+              fontColor: "#990000"
+            }
+          }
+        }
+    });
+  </script>
+</body>
 </html>
