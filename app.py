@@ -95,18 +95,18 @@ def bookmarksWrapped():
                      'Dec': 'December'}
 
     return render_template('wrapped.html',
+                           categories = category_labels,
+                           category_frequencies = category_values,
+                           characters = sortedFrequencyList(characters),
+                           fandoms = sortedFrequencyList(fandoms)[0:5],
+                           month = month_abbrevs[sortedFrequencyList(access_months)[0][0]],
+                           ratings = rating_labels,
+                           rating_frequencies = rating_values,
+                           ships = sortedFrequencyList(ships)[0:5],
                            source = 'bookmarks',
                            timeframe = request.form['timeframe'],
                            total_fanfic_amount = format(len(fanfics), ','),
-                           total_word_count = format(total_word_count, ','),
-                           fandoms = sortedFrequencyList(fandoms)[0:5],
-                           ships = sortedFrequencyList(ships)[0:5],
-                           characters = sortedFrequencyList(characters),
-                           month = month_abbrevs[sortedFrequencyList(access_months)[0][0]],
-                           categories = category_labels,
-                           category_frequencies = category_values,
-                           ratings = rating_labels,
-                           rating_frequencies = rating_values)
+                           total_word_count = format(total_word_count, ','))
 
 @app.route('/history')
 def history():
@@ -201,17 +201,18 @@ def historyWrapped():
                      'Dec': 'December'}
 
     return render_template('wrapped.html',
-                           source = 'history',
-                           timeframe = request.form['timeframe'],
-                           total_fanfic_amount = format(len(fanfics), ','),
-                           total_word_count = format(total_word_count, ','),
-                           fandoms = sortedFrequencyList(fandoms)[0:5],
-                           ships = sortedFrequencyList(ships)[0:5],
-                           month = month_abbrevs[sortedFrequencyList(access_months)[0][0]],
                            categories = category_labels,
                            category_frequencies = category_values,
+                           characters = sortedFrequencyList(characters),
+                           fandoms = sortedFrequencyList(fandoms)[0:5],
+                           month = month_abbrevs[sortedFrequencyList(access_months)[0][0]],
                            ratings = rating_labels,
-                           rating_frequencies = rating_values)
+                           rating_frequencies = rating_values,
+                           ships = sortedFrequencyList(ships)[0:5],
+                           source = 'bookmarks',
+                           timeframe = request.form['timeframe'],
+                           total_fanfic_amount = format(len(fanfics), ','),
+                           total_word_count = format(total_word_count, ','))
 
 if __name__ == '__main__':
     app.run(debug=True)
