@@ -40,7 +40,7 @@
       <h2 class="mixed-size">
         That's a total of
         <br>
-        <span class="bigger">{{total_word_count_string}}</span>
+        <span class="bigger">{{total_word_count}}</span>
         <br>
         words of fanfiction!
       </h2>
@@ -74,6 +74,14 @@
         <li>{{ fandom[0] }} ({{ fandom[1] }} works)</li>
         {% endfor %}
       </ol>
+    </div>
+
+    <div class="wrapped-item">
+      <h2>And how could we forget your favorite character,
+        <br>
+        <span class="bigger">{{characters[0][0]}}?</span>
+      </h2>
+      <p>They showed up in your {{source}} a whopping {{characters[0][1]}} times!</p>
     </div>
 
     <div class="wrapped-item">

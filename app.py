@@ -95,12 +95,13 @@ def bookmarksWrapped():
                      'Dec': 'December'}
 
     return render_template('wrapped.html',
+                           source = 'bookmarks',
                            timeframe = request.form['timeframe'],
-                           total_fanfic_amount = len(fanfics),
-                           total_word_count = total_word_count,
-                           total_word_count_string = f'{total_word_count:,d}',
+                           total_fanfic_amount = format(len(fanfics), ','),
+                           total_word_count = format(total_word_count, ','),
                            fandoms = sortedFrequencyList(fandoms)[0:5],
                            ships = sortedFrequencyList(ships)[0:5],
+                           characters = sortedFrequencyList(characters),
                            month = month_abbrevs[sortedFrequencyList(access_months)[0][0]],
                            categories = category_labels,
                            category_frequencies = category_values,
@@ -200,10 +201,10 @@ def historyWrapped():
                      'Dec': 'December'}
 
     return render_template('wrapped.html',
+                           source = 'history',
                            timeframe = request.form['timeframe'],
-                           total_fanfic_amount = len(fanfics),
-                           total_word_count = total_word_count,
-                           total_word_count_string = f'{total_word_count:,d}',
+                           total_fanfic_amount = format(len(fanfics), ','),
+                           total_word_count = format(total_word_count, ','),
                            fandoms = sortedFrequencyList(fandoms)[0:5],
                            ships = sortedFrequencyList(ships)[0:5],
                            month = month_abbrevs[sortedFrequencyList(access_months)[0][0]],
