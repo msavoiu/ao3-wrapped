@@ -1,13 +1,5 @@
-from bs4 import BeautifulSoup
-from collections import Counter
-from datetime import date
 from flask import *
 from functions import *
-import json
-import matplotlib.pyplot as plt
-import re
-import requests
-from wordcloud import WordCloud
 
 app = Flask(__name__)
 app.secret_key = "AO3Wrapped"

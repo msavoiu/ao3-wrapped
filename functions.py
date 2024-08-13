@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 from collections import Counter
 from datetime import date
 import matplotlib.pyplot as plt
+import requests
 from wordcloud import WordCloud
 
 class Fanfiction:
