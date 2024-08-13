@@ -30,13 +30,25 @@ def scrapeFanficsByYear(username, url_type, session):
         source = session.get(f'https://archiveofourown.org/users/{username}/{url_type}?page={counter}').content
         soup = BeautifulSoup(source, 'lxml')
 
-        # Checks if the page has content
+        # Check if the page has content
         if soup.find('div', class_='header module') is None:
+            break
+
+        # Check if page has any works saved during the current year
+        all_dates = []
+        if url_type == 'bookmarks':
+            for div in soup.find_all('div', class_='user module group'):
+                all_dates.append(div.find('p', class_='datetime').text)
+        elif url_type == 'readings':
+            for h4 in soup.find_all('h4', class_='viewed heading'):
+                all_dates.append(h4.text)
+
+        if not any(year in date for date in all_dates):
             break
 
         blurbs = soup.find_all('li', role='article')
 
-        # Removing deleted and mystery works
+        # Remove deleted and mystery works
         index = 0
         deletion_indices = []
 
@@ -46,7 +58,7 @@ def scrapeFanficsByYear(username, url_type, session):
                     'This has been deleted, sorry!' in blurb.text or
                     'Mystery Work' in blurb.text):
                     deletion_indices.append(index)
-            if url_type == 'readings':
+            elif url_type == 'readings':
                 if (year not in blurb.find('div', class_='user module group').find('h4', class_='viewed heading').text or
                     'This has been deleted, sorry!' in blurb.text or
                     'Mystery' in blurb.text):
@@ -109,7 +121,7 @@ def scrapeFanficsByYear(username, url_type, session):
             if url_type == 'bookmarks':
                 date_text = date_text.find('p', class_='datetime').text
                 access_date = tuple(date_text.split())
-            if url_type == 'readings':
+            elif url_type == 'readings':
                 date_text = date_text.find('h4', class_='viewed heading').text
                 access_date = tuple(date_text[14:26].split())
             # print(access_date)
@@ -149,7 +161,7 @@ def scrapeAllFanfics(username, url_type, session):
                 if ('This has been deleted, sorry!' in blurb.text or
                     'Mystery Work' in blurb.text):
                     deletion_indices.append(index)
-            if url_type == 'readings':
+            elif url_type == 'readings':
                 if ('Deleted work,' in blurb.text or
                     'Mystery' in blurb.text):
                     deletion_indices.append(index)
@@ -211,7 +223,7 @@ def scrapeAllFanfics(username, url_type, session):
             if url_type == 'bookmarks':
                 date_text = date_text.find('p', class_='datetime').text
                 access_date = tuple(date_text.split())
-            if url_type == 'readings':
+            elif url_type == 'readings':
                 date_text = date_text.find('h4', class_='viewed heading').text
                 access_date = tuple(date_text[14:26].split())
             # print(access_date)
