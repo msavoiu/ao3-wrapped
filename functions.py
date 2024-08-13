@@ -2,7 +2,8 @@ from bs4 import BeautifulSoup
 from collections import Counter
 from datetime import date
 import matplotlib.pyplot as plt
-import requests
+import random
+import time
 from wordcloud import WordCloud
 
 class Fanfiction:
@@ -133,8 +134,9 @@ def scrapeFanficsByYear(username, url_type, session):
 
             fanfics.append(fanfic_object)
 
-        print("Page:", counter) # for debugging
+        print("Page:", counter) # for CLI debugging
         counter += 1
+        time.sleep(random.uniform(3,7))
 
     return fanfics
 
@@ -237,6 +239,8 @@ def scrapeAllFanfics(username, url_type, session):
 
         print("Page:", counter) # for debugging
         counter += 1
+        time.sleep(random.uniform(3,7))
+
     return fanfics
 
 def sortedFrequencyList(mylist):

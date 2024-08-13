@@ -1,5 +1,6 @@
 from flask import *
 from functions import *
+import requests
 
 app = Flask(__name__)
 app.secret_key = "AO3Wrapped"
