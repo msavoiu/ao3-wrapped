@@ -53,7 +53,6 @@ def bookmarksWrapped():
     access_months = []
     total_word_count = 0
 
-
     for fanfic in fanfics:
         fandoms.extend(fanfic.fandoms)
         ratings.append(fanfic.rating)
@@ -66,13 +65,21 @@ def bookmarksWrapped():
 
     generateWordcloud(freeforms)
 
-    labels = []
-    values = []
+    category_labels = []
+    category_values = []
 
     category_freqs = sortedFrequencyList(categories)
     for category, freq in category_freqs:
-        labels.append(category)
-        values.append(freq)
+        category_labels.append(category)
+        category_values.append(freq)
+
+    rating_labels = []
+    rating_values = []
+    
+    rating_freqs = sortedFrequencyList(ratings)
+    for rating, freq in rating_freqs:
+        rating_labels.append(rating)
+        rating_values.append(freq)
 
     month_abbrevs = {'Jan': 'January',
                      'Feb': 'February',
@@ -95,9 +102,10 @@ def bookmarksWrapped():
                            fandoms = sortedFrequencyList(fandoms)[0:5],
                            ships = sortedFrequencyList(ships)[0:5],
                            month = month_abbrevs[sortedFrequencyList(access_months)[0][0]],
-                           ratings = frequenciesToPercents(ratings),
-                           categories = labels,
-                           frequencies = values)
+                           categories = category_labels,
+                           category_frequencies = category_values,
+                           ratings = rating_labels,
+                           rating_frequencies = rating_values)
 
 @app.route('/history')
 def history():
@@ -150,7 +158,6 @@ def historyWrapped():
     access_months = []
     total_word_count = 0
 
-
     for fanfic in fanfics:
         fandoms.extend(fanfic.fandoms)
         ratings.append(fanfic.rating)
@@ -163,13 +170,21 @@ def historyWrapped():
 
     generateWordcloud(freeforms)
 
-    labels = []
-    values = []
+    category_labels = []
+    category_values = []
 
     category_freqs = sortedFrequencyList(categories)
     for category, freq in category_freqs:
-        labels.append(category)
-        values.append(freq)
+        category_labels.append(category)
+        category_values.append(freq)
+
+    rating_labels = []
+    rating_values = []
+    
+    rating_freqs = sortedFrequencyList(ratings)
+    for rating, freq in rating_freqs:
+        rating_labels.append(rating)
+        rating_values.append(freq)
 
     month_abbrevs = {'Jan': 'January',
                      'Feb': 'February',
@@ -192,9 +207,10 @@ def historyWrapped():
                            fandoms = sortedFrequencyList(fandoms)[0:5],
                            ships = sortedFrequencyList(ships)[0:5],
                            month = month_abbrevs[sortedFrequencyList(access_months)[0][0]],
-                           ratings = frequenciesToPercents(ratings),
-                           categories = labels,
-                           frequencies = values)
+                           categories = category_labels,
+                           category_frequencies = category_values,
+                           ratings = rating_labels,
+                           rating_frequencies = rating_values)
 
 if __name__ == '__main__':
     app.run(debug=True)
