@@ -17,7 +17,9 @@ Before building this project, I would generate my stats by using a web scraping 
 - 💭 Word cloud of your most frequented tags
 - 📅 The month you read the most
 
-This was the first full project I've ever built, and while there are definitely areas I can improve on, I did learn a lot. AO3 Wrapped taught me how to build web applications from start to finish—both front-end and back-end—and how to deploy them using EC2 instances. I may come back to it in the near future to clean up some code and/or add more features, but for now, take it as my love letter to fannish culture and computer programming, and maybe get your own Wrapped while you're at it. 😊
+This was the first full project I've ever built, and while there are definitely areas I can improve on, I did learn a lot. AO3 Wrapped taught me how to build web applications from start to finish—both front-end and back-end—and how to deploy them using EC2 instances.
+
+I may come back to it in the near future to clean up some code and/or add more features, but for now, take it as my love letter to fannish culture and computer programming, and maybe get your own Wrapped while you're at it. 😊
 
 ### Built with
 [![My Skills](https://skillicons.dev/icons?i=py,flask,html,css,aws,nginx)](https://skillicons.dev)
