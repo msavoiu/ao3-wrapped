@@ -8,7 +8,7 @@ I've always been a nerdy kid at heart, and while I love checking my Spotify Wrap
 
 Before building this project, I would generate my stats by using a web scraping Google Chrome extension, sending my data to Google Sheets as a CSV, and manually creating my own graphs and charts from there. However, I wanted an easier and more user-friendly way to generate my reading stats, and that's how AO3 Wrapped was born!
 
-AO3 Wrapped will show you:
+### AO3 Wrapped will show you:
 - 🫂 Total word count read
 - 💌 Top ships and fandoms
 - 🗣️ Character that showed up most frequently
