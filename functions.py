@@ -272,3 +272,4 @@ def generateWordcloud(tags):
     plt.savefig('static/images/wordcloud.png',
                 bbox_inches='tight')
     print("Word cloud saved to 'static/images/wordcloud.png'")
+    
