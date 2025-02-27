@@ -138,10 +138,12 @@ def historyWrapped():
         flash('Your username and/or password is incorrect. Please try again!')
         return redirect('/history', code=302)
 
-    if request.form['timeframe'] == 'All time':
-        fanfics = scrapeAllFanfics(username, 'readings', s)
-    if request.form['timeframe'] == 'This year':
-        fanfics = scrapeFanficsByYear(username, 'readings', s)
+    fanfics = scrapeFanfics(username, 'readings', request.form['timeframe'], s)
+
+    # if request.form['timeframe'] == 'All time':
+    #     fanfics = scrapeAllFanfics(username, 'readings', s)
+    # if request.form['timeframe'] == 'This year':
+        # fanfics = scrapeFanficsByYear(username, 'readings', s)
 
     fandoms = []
     ratings = []
@@ -164,43 +166,13 @@ def historyWrapped():
 
     generateWordcloud(freeforms)
 
-    category_labels = []
-    category_values = []
-
-    category_freqs = sortedFrequencyList(categories)
-    for category, freq in category_freqs:
-        category_labels.append(category)
-        category_values.append(freq)
-
-    rating_labels = []
-    rating_values = []
-    
-    rating_freqs = sortedFrequencyList(ratings)
-    for rating, freq in rating_freqs:
-        rating_labels.append(rating)
-        rating_values.append(freq)
-
-    month_abbrevs = {'Jan': 'January',
-                     'Feb': 'February',
-                     'Mar': 'March',
-                     'Apr': 'April',
-                     'May': 'May',
-                     'Jun': 'June',
-                     'Jul': 'July',
-                     'Aug': 'August',
-                     'Sep': 'September',
-                     'Oct': 'October',
-                     'Nov': 'November',
-                     'Dec': 'December'}
-
     return render_template('wrapped.html',
-                           categories = category_labels,
-                           category_frequencies = category_values,
+                           categories = getLabelsAndValues(categories),
                            characters = sortedFrequencyList(characters),
                            fandoms = sortedFrequencyList(fandoms)[0:5],
-                           month = month_abbrevs[sortedFrequencyList(access_months)[0][0]],
-                           ratings = rating_labels,
-                           rating_frequencies = rating_values,
+                           month = getMostActiveMonth(access_months),
+                           most_visited = getMostVisited(fanfics),
+                           ratings = getLabelsAndValues(ratings),
                            ships = sortedFrequencyList(ships)[0:5],
                            source = 'bookmarks',
                            timeframe = request.form['timeframe'],
