@@ -1,7 +1,9 @@
 # AO3 Wrapped
 Lightweight web application inspired by Spotify Wrapped that utilizes web scraping to generate user statistics and data visualizations from popular online creative writing platform Archive of Our Own (AO3).
 
-You can check it out (and get your own Wrapped) [here](https://ao3wrapped.lol)!
+You can check it out (and get your own Wrapped) [here](https://ao3-wrapped.vercel.app)!
+
+![wrapped](https://github.com/msavoiu/ao3-wrapped/blob/db365fc7fbb3edf2742c8dfea749f6817a3df0c9/readme.png)
 
 ## About
 I've always been a nerdy kid at heart, and while I love checking my Spotify Wrapped stats at the end of every year, I always wished I could get the stats for the fanfiction I read too. After all, I spend a lot more time reading than I do streaming music.
