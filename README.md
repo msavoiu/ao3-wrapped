@@ -1,7 +1,8 @@
 # AO3 Wrapped
 Lightweight web application inspired by Spotify Wrapped that utilizes web scraping to generate user statistics and data visualizations from popular online creative writing platform Archive of Our Own (AO3).
 
-You can check it out (and get your own Wrapped) [here](https://ao3-wrapped.vercel.app)!
+~~You can check it out (and get your own Wrapped) [here](https://ao3-wrapped.vercel.app)!~~
+Being one of my first ever projects, it doesn't perform the best in production deployment. I've taken it offline for the time being to avoid racking up AWS charges. Hoping to refactor it sometime in the near future and get AO3 Wrapped back online!
 
 ![wrapped](https://github.com/msavoiu/ao3-wrapped/blob/db365fc7fbb3edf2742c8dfea749f6817a3df0c9/readme.png)
 
